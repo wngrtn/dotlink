@@ -1,8 +1,8 @@
 import os.path
 import sys
 from printer import print_color
-from linker import determine_link_status
-
+from linker import determine_link_status, link, unlink
+from sequencer import sequence_to_list
 
 PATH_DOTFILES = '~/.dotfiles/'
 
@@ -30,9 +30,27 @@ for line in catalog_lines:
 if sys.argv[1:] == ['status']:
 
     maxlength_target = max([len(target) for target in catalog.keys()])
+    maxlength_counter = len(str(len(catalog)))
 
-    for target, source in catalog.items():
+    for i, (target, source) in enumerate(catalog.items()):
         status = determine_link_status(target, PATH_DOTFILES + source)
-        entry = f'{target.ljust(maxlength_target)} <- {source}'
+        i_f = str(i + 1).rjust(maxlength_counter)
+        target_f = target.ljust(maxlength_target)
+        entry = f'{i_f} {target_f} <- {source}'
         print_color(entry, STATUS_COLORS[status])
 
+if sys.argv[1] == 'link':
+
+    entries = sequence_to_list(','.join(sys.argv[2:]))
+
+    for i, (target, source) in enumerate(catalog.items()):
+        if i+1 in entries:
+            link(target, PATH_DOTFILES + source)
+
+if sys.argv[1] == 'unlink':
+
+    entries = sequence_to_list(','.join(sys.argv[2:]))
+
+    for i, (target, source) in enumerate(catalog.items()):
+        if i+1 in entries:
+            unlink(target, PATH_DOTFILES + source)
