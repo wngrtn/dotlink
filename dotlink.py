@@ -39,18 +39,11 @@ if sys.argv[1:] == ['status']:
         entry = f'{i_f} {target_f} <- {source}'
         print_color(entry, STATUS_COLORS[status])
 
-if sys.argv[1] == 'link':
+if sys.argv[1] in ['link', 'unlink']:
 
     entries = sequence_to_list(','.join(sys.argv[2:]))
 
     for i, (target, source) in enumerate(catalog.items()):
         if i+1 in entries:
-            link(target, PATH_DOTFILES + source)
+            locals()[sys.argv[1]](target, PATH_DOTFILES + source)
 
-if sys.argv[1] == 'unlink':
-
-    entries = sequence_to_list(','.join(sys.argv[2:]))
-
-    for i, (target, source) in enumerate(catalog.items()):
-        if i+1 in entries:
-            unlink(target, PATH_DOTFILES + source)
