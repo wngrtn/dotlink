@@ -1,6 +1,6 @@
 import os.path
 import sys
-import printer
+from printer import print_color
 from linker import determine_link_status
 
 
@@ -34,5 +34,5 @@ if sys.argv[1:] == ['status']:
     for target, source in catalog.items():
         status = determine_link_status(target, PATH_DOTFILES + source)
         entry = f'{target.ljust(maxlength_target)} <- {source}'
-        printer.print_color(entry, STATUS_COLORS[status])
+        print_color(entry, STATUS_COLORS[status])
 
