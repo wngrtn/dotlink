@@ -1,6 +1,7 @@
 import os
 import os.path
 
+
 def determine_link_status(target, source):
 
     target_expanded = os.path.expanduser(target)
@@ -17,6 +18,7 @@ def determine_link_status(target, source):
 
     return 'linked'
 
+
 def link(target, source):
 
     target_expanded = os.path.expanduser(target)
@@ -24,6 +26,7 @@ def link(target, source):
 
     if determine_link_status(target, source) == 'clear':
         return os.symlink(source_expanded, target_expanded)
+
 
 def unlink(target, source):
 
