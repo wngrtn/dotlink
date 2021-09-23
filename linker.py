@@ -34,8 +34,4 @@ def unlink(target, source):
     source_expanded = os.path.expanduser(source)
 
     if determine_link_status(target, source) == 'linked':
-        if os.path.isdir(target_expanded):
-            return os.rmdir(target_expanded)
-        else:
-            return os.remove(target_expanded)
-
+        return os.remove(target_expanded)
