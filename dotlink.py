@@ -27,6 +27,9 @@ for line in catalog_lines:
 
 # Print Catalog
 # ------------------------------------------------------------------------------
+if len(sys.argv) == 1:
+    sys.argv[1:] = ['status']
+
 if sys.argv[1:] == ['status']:
 
     maxlength_target = max([len(target) for target in catalog.keys()])
